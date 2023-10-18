@@ -23,11 +23,11 @@ export const createProfile = async (req: any, res: Response) => {
         userID,
         avatar: secure_url,
         avatarID: public_id,
-        beg:[]
+        beg: [],
       });
       user?.profile.push(new mongoose.Types.ObjectId(user._id!));
       user.save();
-      return res.status(201).json({
+      return res.status(HTTP.CREATE).json({
         message: "Profile created",
         data: profiled,
       });
@@ -51,17 +51,17 @@ export const viewUserProfile = async (req: Request, res: Response) => {
     const user = await authModel.findById(userID);
 
     if (user) {
-      return res.status(200).json({
+      return res.status(HTTP.OK).json({
         message: "Success",
         data: user?.profile,
       });
     } else {
-      return res.status(404).json({
+      return res.status(HTTP.BAD).json({
         message: "user not found",
       });
     }
   } catch (error: any) {
-    return res.status(404).json({
+    return res.status(HTTP.BAD).json({
       message: "error",
       data: error.message,
     });
@@ -72,12 +72,12 @@ export const viewAll = async (req: Request, res: Response) => {
   try {
     const profiled = await profileModel.find();
 
-    return res.status(200).json({
+    return res.status(HTTP.OK).json({
       message: "viewing profiles",
       data: profiled,
     });
   } catch (error: any) {
-    return res.status(404).json({
+    return res.status(HTTP.BAD).json({
       message: "error",
       data: error.message,
     });
@@ -90,12 +90,12 @@ export const viewOne = async (req: Request, res: Response) => {
 
     const profiled = await profileModel.findById(profileID);
 
-    return res.status(200).json({
+    return res.status(HTTP.OK).json({
       message: "view one profile",
       data: profiled,
     });
   } catch (error: any) {
-    return res.status(404).json({
+    return res.status(HTTP.BAD).json({
       message: "error",
       data: error.message,
     });
@@ -108,12 +108,12 @@ export const deleteOne = async (req: Request, res: Response) => {
 
     const profiled = await profileModel.findByIdAndDelete(profileID);
 
-    return res.status(200).json({
+    return res.status(HTTP.OK).json({
       message: "delete one profile",
       data: profiled,
     });
   } catch (error: any) {
-    return res.status(404).json({
+    return res.status(HTTP.BAD).json({
       message: "error",
       data: error.message,
     });
@@ -132,12 +132,12 @@ export const updateOne = async (req: Request, res: Response) => {
       { new: true }
     );
 
-    return res.status(200).json({
+    return res.status(HTTP.CREATE).json({
       message: "view one profile",
       data: profiled,
     });
   } catch (error: any) {
-    return res.status(404).json({
+    return res.status(HTTP.BAD).json({
       message: "error",
       data: error.message,
     });
@@ -155,17 +155,17 @@ export const getUserProfile = async (req: Request, res: Response) => {
     if (user?._id === profile?.userID) {
       const profiled = await profileModel.find();
 
-      return res.status(200).json({
+      return res.status(HTTP.OK).json({
         message: "User profile",
         data: profiled,
       });
     } else {
-      return res.status(404).json({
+      return res.status(HTTP.BAD).json({
         message: "User profile not found",
       });
     }
   } catch (error) {
-    return res.status(404).json({
+    return res.status(HTTP.BAD).json({
       message: "error",
       data: error.message,
     });

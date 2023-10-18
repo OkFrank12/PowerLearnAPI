@@ -16,6 +16,7 @@ export interface iProfile {
   name: string;
   phoneNumber: string;
   address: string;
+  userID: string;
   aboutUs: string;
   beg:Array<string>
   user: {};

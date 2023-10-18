@@ -8,6 +8,7 @@ export interface iUser {
   profile: Array<string>;
   history: Array<string>;
 }
+  
 
 export interface iProfile {
   avatar: string;
@@ -45,7 +46,5 @@ export interface iCheckOut {
 
 export interface iUserData extends iUser, mongoose.Document {}
 export interface iProfileData extends iProfile, mongoose.Document {}
-
 export interface iBegData extends iBeg, mongoose.Document {}
-
 export interface iCheckOutData extends iCheckOut, mongoose.Document {}

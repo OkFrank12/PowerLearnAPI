@@ -9,11 +9,25 @@
   "author": "Okoro Franklin",
   "license": "MIT",
   "dependencies": {
+    "@types/cors": "^2.8.15",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.20",
+    "@types/helmet": "^4.0.0",
     "@types/mongoose": "^5.11.97",
+<<<<<<< HEAD
+    "@types/nodemailer": "^6.4.12",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mongoose": "^7.6.3"
+    "googleapis": "^127.0.0",
+=======
+    "@types/morgan": "^1.9.7",
+    "@types/nodemailer": "^6.4.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.0.0",
+>>>>>>> f1537b56c901d4ad5b4619928ca9a924312039e2
+    "mongoose": "^7.6.3",
+    "nodemailer": "^6.9.6"
   }
 }

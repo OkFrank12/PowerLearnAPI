@@ -9,6 +9,9 @@ const profileModel = new mongoose.Schema<iProfileData>(
     avatarID: {
       type: String,
     },
+    userID: {
+      type: String,
+    },
     name: {
       type: String,
     },

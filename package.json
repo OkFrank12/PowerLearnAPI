@@ -4,7 +4,7 @@
   "description": "I want to run an API for an energy crowdfunding platform with my team",
   "main": "index.js",
   "scripts": {
-    "test": "ts-node-dev  --respawn index.ts"
+    "start": "ts-node-dev  --respawn index.ts"
   },
   "author": "Okoro Franklin",
   "license": "MIT",

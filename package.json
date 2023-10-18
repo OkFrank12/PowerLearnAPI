@@ -4,8 +4,15 @@
   "description": "I want to run an API for an energy crowdfunding platform with my team",
   "main": "index.js",
   "scripts": {
-    "test": "ts-node-dev  --respawn index.ts"
+    "start": "ts-node-dev  --respawn index.ts"
   },
   "author": "Okoro Franklin",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/nodemailer": "^6.4.12",
+    "dotenv": "^16.3.1",
+    "googleapis": "^127.0.0",
+    "nodemailer": "^6.9.6"
+  }
 }

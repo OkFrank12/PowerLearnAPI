@@ -1,4 +1,4 @@
-import { HTTP} from "../errors/mainError";
+import { HTTP } from "../errors/mainError";
 import authModel from "../model/authModel";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
@@ -22,7 +22,7 @@ export const registerUser = async (
       token: value,
     });
 
-    const token = jwt.sign({id: user._id}, "token")
+    const token = jwt.sign({ id: user._id }, "token");
 
     sendMail(user, token).then(() => {
       console.log("Mail sent...!");
@@ -31,7 +31,7 @@ export const registerUser = async (
     return res.status(HTTP.CREATE).json({
       message: "Registered user",
       data: user,
-      token
+      token,
     });
   } catch (error: any) {
     return res.status(HTTP.BAD).json({
@@ -46,31 +46,33 @@ export const verifyUser = async (
   res: Response
 ): Promise<Response> => {
   try {
-    const { userID } = req.params;
-    const user = await authModel.findById(userID);
-    if (user) {
-      if (user.token !== "") {
-        await authModel.findByIdAndUpdate(
-          user._id,
-          {
-            token: "",
-            verified: true,
-          },
-          { new: true }
-        );
-        return res.status(HTTP.CREATE).json({
-          message: "verified user",
-        });
-      } else {
-        return res.status(HTTP.BAD).json({
-          message: "user haven't been verified",
-        });
+    const { token } = req.params;
+
+    const getUserID: any = jwt.verify(
+      token,
+      "token",
+      (err: any, payload: any) => {
+        if (err) {
+          return err;
+        } else {
+          return payload;
+        }
       }
-    } else {
-      return res.status(HTTP.BAD).json({
-        message: "user does not exist",
-      });
-    }
+    );
+
+    const user = await authModel.findByIdAndUpdate(
+      getUserID.id,
+      {
+        token: "",
+        verified: true,
+      },
+      { new: true }
+    );
+
+    return res.status(HTTP.OK).json({
+      message: "verified user",
+      data: user,
+    });
   } catch (error: any) {
     return res.status(HTTP.BAD).json({
       message: "error verifying user",
@@ -92,7 +94,7 @@ export const signInUser = async (req: Request, res: Response) => {
             "token"
           );
 
-          return res.status(HTTP.OK).json({
+          return res.status(HTTP.CREATE).json({
             message: `Welcome Back`,
             data: token,
           });

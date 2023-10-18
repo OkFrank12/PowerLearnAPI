@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { sendMail } from "../utils/email";
+import { resetMail, sendMail } from "../utils/email";
 
 export const registerUser = async (
   req: Request,
@@ -170,6 +170,99 @@ export const viewOneUser = async (req: Request, res: Response) => {
   } catch (error: any) {
     return res.status(HTTP.BAD).json({
       message: "error viewing one user",
+      data: error.message,
+    });
+  }
+};
+
+export const resetUserPassword = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const { email } = req.body;
+    const user = await authModel.findOne({ email });
+
+    if (user?.verified && user?.token === "") {
+      const token = jwt.sign({ id: user._id }, "token");
+      const reset = await authModel.findByIdAndUpdate(
+        user._id,
+        {
+          token,
+        },
+        { new: true }
+      );
+
+      resetMail(user, token).then(() => {
+        console.log("Reset Mail sent...!");
+      });
+
+      return res.status(HTTP.OK).json({
+        message: "Access granted to change password",
+        data: reset,
+      });
+    } else {
+      return res.status(HTTP.BAD).json({
+        message: "Unauthorized to reset password",
+      });
+    }
+  } catch (error: any) {
+    return res.status(HTTP.BAD).json({
+      message: "error reseting password",
+      data: error.message,
+    });
+  }
+};
+
+export const changeUserPassword = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    const getUserID: any = jwt.verify(
+      token,
+      "token",
+      (err: any, payload: any) => {
+        if (err) {
+          return err;
+        } else {
+          return payload;
+        }
+      }
+    );
+
+    const user = await authModel.findById(getUserID.id);
+
+    console.log(user);
+
+    if (user?.verified && user.token === "") {
+      const salted = await bcrypt.genSalt(10);
+      const hashed = await bcrypt.hash(password, salted);
+
+      const variable = await authModel.findByIdAndUpdate(
+        user._id,
+        {
+          password: hashed,
+          token: "",
+        },
+        { new: true }
+      );
+
+      return res.status(HTTP.CREATE).json({
+        message: "success in changing password",
+        data: variable,
+      });
+    } else {
+      return res.status(HTTP.BAD).json({
+        message: "you can't change this password",
+      });
+    }
+  } catch (error: any) {
+    return res.status(HTTP.BAD).json({
+      message: "error changeUserPassword",
       data: error.message,
     });
   }

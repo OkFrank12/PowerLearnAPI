@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { HTTP, mainError } from "./errors/mainError";
 import { NextFunction } from "connect";
 import { errorHandling } from "./errors/errorHandling";
+import auth from "./router/authRouter";
 
 export const appConfig = (app: Application) => {
   app.use(express.json());
@@ -12,6 +13,8 @@ export const appConfig = (app: Application) => {
   app.use(helmet());
   app.use(morgan("dev"));
   app.set("view engine", "ejs");
+
+  app.use("/api", auth);
 
   app.get("/", (req: Request, res: Response) => {
     try {

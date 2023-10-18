@@ -28,6 +28,7 @@ export interface iBeg {
     description: string;
     amountNeeded: number;
     amountRaised: number;
+    category: string;
 
     image: string;
     imageID: string;

@@ -1,8 +1,6 @@
 import nodemailer from "nodemailer";
 import { google } from "googleapis";
 
-const baseUrl: string = `http://localhost:1000`;
-
 const G_ID: string =
   "403139932252-k0ksvgd56ohc39lsckt5bt3oquahgnvb.apps.googleusercontent.com";
 const G_SECRET: string = "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";
@@ -28,12 +26,22 @@ export const sendMail = async (user: any, token: any) => {
       },
     });
 
+    const baseUrl: string = `http://localhost:1000/api/${token}/verify`;
+
     const mailer = {
       from: "crowdPro💡💡 <cfoonyemmemme@gmail.com>",
       to: user.email,
       subject: "Verify Mail",
-      html: ``,
+      html: `<p>
+      We are very pleased to see you
+      <br />
+      register with us
+      <br />
+      <a href="${baseUrl}">verify</a>
+      </p>`,
     };
+
+    transport.sendMail(mailer);
   } catch (error: any) {
     console.log(error);
   }

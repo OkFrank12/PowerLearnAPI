@@ -8,5 +8,3 @@ export interface iUser {
   profile: Array<string>;
   history: Array<string>;
 }
-
-export interface iUserData extends iUser, mongoose.Document {}

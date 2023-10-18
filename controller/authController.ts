@@ -1,4 +1,4 @@
-import { HTTP}from "../errors/errorHandling";
+import { HTTP} from "../errors/mainError";
 import authModel from "../model/authModel";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";

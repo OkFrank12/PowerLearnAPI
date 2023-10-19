@@ -1,6 +1,6 @@
 import joi from "joi"
 
-let regex = /^(?!.*\s).{10,20}$/;
+let regex = /^(?!.*\s).{6,20}$/;
 
 export const validAction = joi.object({
     email: joi.string().email().trim().lowercase().required(),

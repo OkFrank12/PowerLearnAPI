@@ -67,7 +67,7 @@ export const viewOneBeg = async (req: Request, res: Response) => {
   try {
     const { abegID } = req.params;
     const abeg = await begModel.findById(abegID);
-
+    
     return res.status(HTTP.OK).json({
       message: "viewing all abeg",
       data: abeg,

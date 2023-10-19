@@ -7,9 +7,8 @@ export interface iUser {
   token: string;
   profile: Array<string>;
   history: Array<string>;
-  beg:Array<string>
+  beg: Array<string>;
 }
-  
 
 export interface iProfile {
   avatar: string;
@@ -23,30 +22,21 @@ export interface iProfile {
 }
 
 export interface iBeg {
-    title: string;
-    motivation: string;
-    description: string;
-    amountNeeded: number;
-    amountRaised: number;
-    category: string;
+  title: string;
+  motivation: string;
+  description: string;
+  amountNeeded: number;
+  amountRaised: number;
+  category: string;
+  userID: string;
+  image: string;
+  imageID: string;
+  like: Array<string>;
+  checkOut: Array<string>;
 
-    image: string;
-    imageID: string;
-
-    like:Array<string>;
-    checkOut:Array<string>
-
-    user: {};
-}
-
-export interface iCheckOut {
-    email:string;
-    amount:number;
-
-    beg:{}
+  user: {};
 }
 
 export interface iUserData extends iUser, mongoose.Document {}
 export interface iProfileData extends iProfile, mongoose.Document {}
 export interface iBegData extends iBeg, mongoose.Document {}
-export interface iCheckOutData extends iCheckOut, mongoose.Document {}

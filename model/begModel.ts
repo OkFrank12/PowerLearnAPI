@@ -12,6 +12,9 @@ const begModel = new mongoose.Schema<iBegData>(
     category: {
       type: String,
     },
+    userID: {
+      type: String,
+    },
     description: {
       type: String,
     },

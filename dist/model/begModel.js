@@ -14,6 +14,9 @@ const begModel = new mongoose_1.default.Schema({
     category: {
         type: String,
     },
+    userID: {
+        type: String,
+    },
     description: {
         type: String,
     },

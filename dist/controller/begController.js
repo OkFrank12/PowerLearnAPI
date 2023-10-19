@@ -33,6 +33,7 @@ const createBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 image: secure_url,
                 imageID: public_id,
                 love: [],
+                userID,
                 amountNeeded: parseInt(amountNeeded),
                 amountRaised: 0,
             });
@@ -144,9 +145,11 @@ const searchCategory = (req, res) => __awaiter(void 0, void 0, void 0, function*
 exports.searchCategory = searchCategory;
 const likeBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { begID, userID } = req.params;
+        const { userID, begID } = req.params;
         const abeg = yield begModel_1.default.findById(begID);
-        if (abeg) {
+        const user = yield authModel_1.default.findById(userID);
+        console.log(begID);
+        if (abeg && user) {
             const liked = yield begModel_1.default.findByIdAndUpdate(begID, {
                 abeg: abeg === null || abeg === void 0 ? void 0 : abeg.like,
             }, { new: true });

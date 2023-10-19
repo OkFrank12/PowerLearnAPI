@@ -16,6 +16,7 @@ export interface iProfile {
   name: string;
   phoneNumber: string;
   address: string;
+  userID: string;
   aboutUs: string;
   beg:Array<string>
   user: {};
@@ -27,6 +28,7 @@ export interface iBeg {
     description: string;
     amountNeeded: number;
     amountRaised: number;
+    category: string;
 
     image: string;
     imageID: string;

@@ -9,6 +9,9 @@ const begModel = new mongoose.Schema<iBegData>(
     motivation: {
       type: String,
     },
+    category: {
+      type: String,
+    },
     description: {
       type: String,
     },

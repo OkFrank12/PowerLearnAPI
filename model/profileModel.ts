@@ -25,12 +25,6 @@ const profileModel = new mongoose.Schema<iProfileData>(
       type: mongoose.Types.ObjectId,
       ref: "users",
     },
-    beg: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "begs",
-      },
-    ],
     aboutUs: {
       type: String,
     },

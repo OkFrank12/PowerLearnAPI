@@ -16,7 +16,7 @@ export const createProfile = async (req: any, res: Response) => {
     const user: any = await authModel.findById(userID);
 
     if (user) {
-      const profiled = await profileModel.create({
+      const profiled :any = await profileModel.create({
         name,
         address,
         phoneNumber,
@@ -25,7 +25,7 @@ export const createProfile = async (req: any, res: Response) => {
         avatarID: public_id,
         beg: [],
       });
-      user?.profile.push(new mongoose.Types.ObjectId(user._id!));
+      user?.profile.push(new mongoose.Types.ObjectId(profiled?._id!));
       user.save();
       return res.status(HTTP.CREATE).json({
         message: "Profile created",
@@ -39,30 +39,6 @@ export const createProfile = async (req: any, res: Response) => {
   } catch (error: any) {
     return res.status(HTTP.BAD).json({
       message: "Error creating profile",
-      data: error.message,
-    });
-  }
-};
-
-export const viewUserProfile = async (req: Request, res: Response) => {
-  try {
-    const { userID } = req.params;
-
-    const user = await authModel.findById(userID);
-
-    if (user) {
-      return res.status(HTTP.OK).json({
-        message: "Success",
-        data: user?.profile,
-      });
-    } else {
-      return res.status(HTTP.BAD).json({
-        message: "user not found",
-      });
-    }
-  } catch (error: any) {
-    return res.status(HTTP.BAD).json({
-      message: "error",
       data: error.message,
     });
   }
@@ -152,7 +128,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
 
     const profile: any = await profileModel.findById(profileID);
 
-    if (user?._id === profile?.userID) {
+    if (user?._id !== profile?.userID) {
       const profiled = await profileModel.find();
 
       return res.status(HTTP.OK).json({
@@ -164,7 +140,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
         message: "User profile not found",
       });
     }
-  } catch (error) {
+  } catch (error:any) {
     return res.status(HTTP.BAD).json({
       message: "error",
       data: error.message,

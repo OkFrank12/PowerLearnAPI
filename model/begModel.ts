@@ -38,9 +38,9 @@ const begModel = new mongoose.Schema<iBegData>(
         type: mongoose.Types.ObjectId,
       },
     ],
-    profile: {
+    user: {
       type: mongoose.Types.ObjectId,
-      ref: "profiles",
+      ref: "users",
     },
   },
   { timestamps: true }

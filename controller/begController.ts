@@ -3,18 +3,18 @@ import begModel from "../model/begModel";
 import mongoose from "mongoose";
 import { HTTP } from "../errors/mainError";
 import { streamUpload } from "../utils/streamUpload";
-import profileModel from "../model/profileModel";
+import authModel from "../model/authModel";
 
 export const createBeg = async (req: any, res: Response) => {
   try {
-    const { profileID } = req.params;
+    const { userID } = req.params;
 
     const { title, description, motivation, category, amountNeeded } = req.body;
 
     const { secure_url, public_id }: any = await streamUpload(req);
 
-    const profiled: any = await profileModel.findById(profileID);
-    if (profiled) {
+    const user: any = await authModel.findById(userID);
+    if (user) {
       const abeg = await begModel.create({
         title,
         description,
@@ -26,8 +26,8 @@ export const createBeg = async (req: any, res: Response) => {
         amountNeeded: parseInt(amountNeeded),
         amountRaised: 0,
       });
-      profiled?.beg.push(new mongoose.Types.ObjectId(profiled?._id!));
-      profiled?.save();
+      user?.beg.push(new mongoose.Types.ObjectId(abeg?._id!));
+      user?.save();
 
       return res.status(HTTP.CREATE).json({
         message: "created beg successfully",

@@ -74,7 +74,9 @@ exports.viewAll = viewAll;
 const viewOne = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { profileID } = req.params;
-        const profiled = yield profileModel_1.default.findById(profileID);
+        const profiled = yield authModel_1.default.findById(profileID).populate({
+            path: "profile",
+        });
         return res.status(mainError_1.HTTP.OK).json({
             message: "view one profile",
             data: profiled,

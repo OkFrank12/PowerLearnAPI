@@ -16,7 +16,7 @@ export const createProfile = async (req: any, res: Response) => {
     const user: any = await authModel.findById(userID);
 
     if (user) {
-      const profiled :any = await profileModel.create({
+      const profiled: any = await profileModel.create({
         name,
         address,
         phoneNumber,
@@ -64,7 +64,9 @@ export const viewOne = async (req: Request, res: Response) => {
   try {
     const { profileID } = req.params;
 
-    const profiled = await profileModel.findById(profileID);
+    const profiled = await authModel.findById(profileID).populate({
+      path: "profile",
+    });
 
     return res.status(HTTP.OK).json({
       message: "view one profile",
@@ -140,7 +142,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
         message: "User profile not found",
       });
     }
-  } catch (error:any) {
+  } catch (error: any) {
     return res.status(HTTP.BAD).json({
       message: "error",
       data: error.message,

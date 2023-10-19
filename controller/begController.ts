@@ -23,6 +23,7 @@ export const createBeg = async (req: any, res: Response) => {
         image: secure_url,
         imageID: public_id,
         love: [],
+        userID,
         amountNeeded: parseInt(amountNeeded),
         amountRaised: 0,
       });
@@ -138,10 +139,13 @@ export const searchCategory = async (req: Request, res: Response) => {
 
 export const likeBeg = async (req: Request, res: Response) => {
   try {
-    const { begID, userID } = req.params;
+    const {userID,  begID } = req.params;
     const abeg: any = await begModel.findById(begID);
 
-    if (abeg) {
+    const user:any = await authModel.findById(userID);
+
+    console.log(begID)
+    if (abeg && user) {
       const liked = await begModel.findByIdAndUpdate(
         begID,
         {

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.likeBeg = exports.searchCategory = exports.updateOneBeg = exports.deleteOneBeg = exports.viewOneBeg = exports.viewBeg = exports.createBeg = void 0;
+exports.likeBeg = exports.searchCategory = exports.giveOneBeg = exports.updateOneBeg = exports.deleteOneBeg = exports.viewOneBeg = exports.viewBeg = exports.createBeg = void 0;
 const begModel_1 = __importDefault(require("../model/begModel"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const mainError_1 = require("../errors/mainError");
@@ -126,6 +126,28 @@ const updateOneBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.updateOneBeg = updateOneBeg;
+const giveOneBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { abegID } = req.params;
+        const { amount } = req.body;
+        const abegUser = yield begModel_1.default.findById(abegID);
+        const abeg = yield begModel_1.default.findByIdAndUpdate(abegID, {
+            amountNeeded: (abegUser === null || abegUser === void 0 ? void 0 : abegUser.amountNeeded) - parseInt(amount),
+            amountRaised: (abegUser === null || abegUser === void 0 ? void 0 : abegUser.amountRaised) + parseInt(amount)
+        }, { new: true });
+        return res.status(mainError_1.HTTP.OK).json({
+            message: "viewing all abeg",
+            data: abeg,
+        });
+    }
+    catch (error) {
+        return res.status(mainError_1.HTTP.BAD).json({
+            message: "error",
+            data: error.message,
+        });
+    }
+});
+exports.giveOneBeg = giveOneBeg;
 const searchCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { category } = req.body;

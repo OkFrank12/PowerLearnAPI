@@ -119,6 +119,35 @@ export const updateOneBeg = async (req: Request, res: Response) => {
   }
 };
 
+export const giveOneBeg = async (req: Request, res: Response) => {
+  try {
+    const { abegID } = req.params;
+    const { amount} = req.body;
+
+    const abegUser = await begModel.findById(abegID)
+
+
+    const abeg = await begModel.findByIdAndUpdate(
+      abegID,
+      { 
+        amountNeeded: abegUser?.amountNeeded!  - parseInt(amount),
+        amountRaised: abegUser?.amountRaised!  + parseInt(amount)
+      },
+      { new: true }
+    );
+
+    return res.status(HTTP.OK).json({
+      message: "viewing all abeg",
+      data: abeg,
+    });
+  } catch (error: any) {
+    return res.status(HTTP.BAD).json({
+      message: "error",
+      data: error.message,
+    });
+  }
+};
+
 export const searchCategory = async (req: Request, res: Response) => {
   try {
     const { category } = req.body;

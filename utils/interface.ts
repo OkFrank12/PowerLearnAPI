@@ -7,6 +7,7 @@ export interface iUser {
   token: string;
   profile: Array<string>;
   history: Array<string>;
+  beg:Array<string>
 }
   
 
@@ -18,7 +19,6 @@ export interface iProfile {
   address: string;
   userID: string;
   aboutUs: string;
-  beg:Array<string>
   user: {};
 }
 
@@ -36,7 +36,7 @@ export interface iBeg {
     like:Array<string>;
     checkOut:Array<string>
 
-    profile:{}
+    user: {};
 }
 
 export interface iCheckOut {

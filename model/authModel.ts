@@ -22,6 +22,13 @@ const authModel = new mongoose.Schema<iUserData>(
         ref: "profiles",
       },
     ],
+
+    beg: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "begs",
+      },
+    ],
     history: [
       {
         type: mongoose.Types.ObjectId,

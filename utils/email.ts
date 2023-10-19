@@ -13,7 +13,7 @@ const G_URL: string = "https://developers.google.com/oauthplayground";
 const oAuth = new google.auth.OAuth2(G_ID, G_SECRET, G_URL);
 oAuth.setCredentials({ access_token: G_REFRESH });
 
-const URL: string = `http://localhost:5173`;
+const URL: string = `https://eco-funds.web.app`;
 
 export const sendMail = async (user: any, token: any) => {
   try {

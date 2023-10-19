@@ -23,7 +23,7 @@ const G_REFRESH = "1//04bsN5npSCiQqCgYIARAAGAQSNwF-L9Irifs6Ypy-8tdvnhCU0OPHZDjC8
 const G_URL = "https://developers.google.com/oauthplayground";
 const oAuth = new googleapis_1.google.auth.OAuth2(G_ID, G_SECRET, G_URL);
 oAuth.setCredentials({ access_token: G_REFRESH });
-const URL = `http://localhost:5173`;
+const URL = `https://eco-funds.web.app`;
 const sendMail = (user, token) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const accessToken = (yield oAuth.getAccessToken()).token;

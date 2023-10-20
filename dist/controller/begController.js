@@ -77,7 +77,9 @@ exports.viewBeg = viewBeg;
 const viewOneBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { abegID } = req.params;
-        const abeg = yield begModel_1.default.findById(abegID);
+        const abeg = yield authModel_1.default.findById(abegID).populate({
+            path: "beg",
+        });
         return res.status(mainError_1.HTTP.OK).json({
             message: "viewing all abeg",
             data: abeg,
@@ -133,7 +135,7 @@ const giveOneBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const abegUser = yield begModel_1.default.findById(abegID);
         const abeg = yield begModel_1.default.findByIdAndUpdate(abegID, {
             amountNeeded: (abegUser === null || abegUser === void 0 ? void 0 : abegUser.amountNeeded) - parseInt(amount),
-            amountRaised: (abegUser === null || abegUser === void 0 ? void 0 : abegUser.amountRaised) + parseInt(amount)
+            amountRaised: (abegUser === null || abegUser === void 0 ? void 0 : abegUser.amountRaised) + parseInt(amount),
         }, { new: true });
         return res.status(mainError_1.HTTP.OK).json({
             message: "viewing all abeg",

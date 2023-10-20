@@ -66,8 +66,10 @@ export const viewBeg = async (req: Request, res: Response) => {
 export const viewOneBeg = async (req: Request, res: Response) => {
   try {
     const { abegID } = req.params;
-    const abeg = await begModel.findById(abegID);
-    
+    const abeg = await authModel.findById(abegID).populate({
+      path: "beg",
+    });
+
     return res.status(HTTP.OK).json({
       message: "viewing all abeg",
       data: abeg,
@@ -122,16 +124,15 @@ export const updateOneBeg = async (req: Request, res: Response) => {
 export const giveOneBeg = async (req: Request, res: Response) => {
   try {
     const { abegID } = req.params;
-    const { amount} = req.body;
+    const { amount } = req.body;
 
-    const abegUser = await begModel.findById(abegID)
-
+    const abegUser = await begModel.findById(abegID);
 
     const abeg = await begModel.findByIdAndUpdate(
       abegID,
-      { 
-        amountNeeded: abegUser?.amountNeeded!  - parseInt(amount),
-        amountRaised: abegUser?.amountRaised!  + parseInt(amount)
+      {
+        amountNeeded: abegUser?.amountNeeded! - parseInt(amount),
+        amountRaised: abegUser?.amountRaised! + parseInt(amount),
       },
       { new: true }
     );
@@ -168,12 +169,12 @@ export const searchCategory = async (req: Request, res: Response) => {
 
 export const likeBeg = async (req: Request, res: Response) => {
   try {
-    const {userID,  begID } = req.params;
+    const { userID, begID } = req.params;
     const abeg: any = await begModel.findById(begID);
 
-    const user:any = await authModel.findById(userID);
+    const user: any = await authModel.findById(userID);
 
-    console.log(begID)
+    console.log(begID);
     if (abeg && user) {
       const liked = await begModel.findByIdAndUpdate(
         begID,

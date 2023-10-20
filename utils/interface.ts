@@ -5,9 +5,9 @@ export interface iUser {
   password: string;
   verified: boolean;
   token: string;
-  profile: Array<string>;
-  history: Array<string>;
-  beg: Array<string>;
+  profile: {}[];
+  history: {}[];
+  beg: {}[];
 }
 
 export interface iProfile {

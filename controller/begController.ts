@@ -66,9 +66,7 @@ export const viewBeg = async (req: Request, res: Response) => {
 export const viewOneBeg = async (req: Request, res: Response) => {
   try {
     const { abegID } = req.params;
-    const abeg = await authModel.findById(abegID).populate({
-      path: "beg",
-    });
+    const abeg = await authModel.findById(abegID)
 
     return res.status(HTTP.OK).json({
       message: "viewing all abeg",

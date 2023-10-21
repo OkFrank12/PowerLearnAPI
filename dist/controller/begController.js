@@ -77,9 +77,7 @@ exports.viewBeg = viewBeg;
 const viewOneBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { abegID } = req.params;
-        const abeg = yield authModel_1.default.findById(abegID).populate({
-            path: "beg",
-        });
+        const abeg = yield authModel_1.default.findById(abegID);
         return res.status(mainError_1.HTTP.OK).json({
             message: "viewing all abeg",
             data: abeg,

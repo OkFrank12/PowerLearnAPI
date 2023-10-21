@@ -63,10 +63,29 @@ export const viewBeg = async (req: Request, res: Response) => {
   }
 };
 
+export const viewOneBegPopulate = async (req: Request, res: Response) => {
+  try {
+    const { abegID } = req.params;
+    const abeg = await authModel.findById(abegID).populate({
+      path: "beg",
+    });
+
+    return res.status(HTTP.OK).json({
+      message: "viewing all abeg",
+      data: abeg,
+    });
+  } catch (error: any) {
+    return res.status(HTTP.BAD).json({
+      message: "error",
+      data: error.message,
+    });
+  }
+};
+
 export const viewOneBeg = async (req: Request, res: Response) => {
   try {
     const { abegID } = req.params;
-    const abeg = await begModel.findById(abegID)
+    const abeg = await begModel.findById(abegID);
 
     return res.status(HTTP.OK).json({
       message: "viewing all abeg",

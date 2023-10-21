@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.likeBeg = exports.searchCategory = exports.giveOneBeg = exports.updateOneBeg = exports.deleteOneBeg = exports.viewOneBeg = exports.viewBeg = exports.createBeg = void 0;
+exports.likeBeg = exports.searchCategory = exports.giveOneBeg = exports.updateOneBeg = exports.deleteOneBeg = exports.viewOneBeg = exports.viewOneBegPopulate = exports.viewBeg = exports.createBeg = void 0;
 const begModel_1 = __importDefault(require("../model/begModel"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const mainError_1 = require("../errors/mainError");
@@ -74,6 +74,25 @@ const viewBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.viewBeg = viewBeg;
+const viewOneBegPopulate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { abegID } = req.params;
+        const abeg = yield authModel_1.default.findById(abegID).populate({
+            path: "beg",
+        });
+        return res.status(mainError_1.HTTP.OK).json({
+            message: "viewing all abeg",
+            data: abeg,
+        });
+    }
+    catch (error) {
+        return res.status(mainError_1.HTTP.BAD).json({
+            message: "error",
+            data: error.message,
+        });
+    }
+});
+exports.viewOneBegPopulate = viewOneBegPopulate;
 const viewOneBeg = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { abegID } = req.params;

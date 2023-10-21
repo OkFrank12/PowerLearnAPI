@@ -210,7 +210,7 @@ const changeUserPassword = (req, res) => __awaiter(void 0, void 0, void 0, funct
         });
         const user = yield authModel_1.default.findById(getUserID.id);
         console.log(user);
-        if ((user === null || user === void 0 ? void 0 : user.verified) && user.token === "") {
+        if ((user === null || user === void 0 ? void 0 : user.verified) && user.token !== "") {
             const salted = yield bcrypt_1.default.genSalt(10);
             const hashed = yield bcrypt_1.default.hash(password, salted);
             const variable = yield authModel_1.default.findByIdAndUpdate(user._id, {

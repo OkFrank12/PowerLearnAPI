@@ -238,7 +238,7 @@ export const changeUserPassword = async (
 
     console.log(user);
 
-    if (user?.verified && user.token === "") {
+    if (user?.verified && user.token !== "") {
       const salted = await bcrypt.genSalt(10);
       const hashed = await bcrypt.hash(password, salted);
 
